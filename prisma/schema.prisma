@@ -10,15 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  role      Role     @default(USER)
-  image     String?
-}
-
 enum Role {
   ADMIN
   USER
@@ -32,6 +23,18 @@ model Expense {
   date        DateTime
   storeName   String
   description String?
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  role      Role      @default(USER)
+  image     String?
+  expenses  Expense[]
 }
 
 enum Category {
