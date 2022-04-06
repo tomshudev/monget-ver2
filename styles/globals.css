@@ -3,12 +3,42 @@
 @tailwind utilities;
 
 @layer base {
-  html, body {
+  html,
+  body {
     font-family: 'Inter', sans-serif;
     /* font-family: 'Roboto', sans-serif; */
   }
 
   body {
-    @apply bg-black;
+    background: hsla(332, 57%, 69%, 60%);
+
+    background: linear-gradient(
+      270deg,
+      hsla(332, 57%, 69%, 60%) 0%,
+      hsla(208, 90%, 88%, 60%) 100%
+    );
+
+    background: -moz-linear-gradient(
+      270deg,
+      hsla(332, 57%, 69%, 60%) 0%,
+      hsla(208, 90%, 88%, 60%) 100%
+    );
+
+    background: -webkit-linear-gradient(
+      270deg,
+      hsla(332, 57%, 69%, 60%) 0%,
+      hsla(208, 90%, 88%, 60%) 100%
+    );
+  }
+}
+
+@layer components {
+  .glass {
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.1px);
+    -webkit-backdrop-filter: blur(6.1px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 }

@@ -47,24 +47,15 @@ const ApplicationSkeleton = ({ children }) => {
         <title>Monget - Manage your expenses</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {routeer.pathname !== '/login' && <Header />}
-      <main className="max-w-[1500px] bg-black min-h-screen flex mx-auto text-[#d9d9d9]">
-        {children}
+      <main className="max-w-[1700px] min-h-screen flex mx-auto text-[#d9d9d9]">
+        <div className="m-10 glass w-full rounded-[40px] overflow-hidden">
+          {/* {routeer.pathname !== '/login' && <Header />} */}
+
+          {children}
+        </div>
       </main>
     </div>
   )
 }
-
-// MyApp.getInitialProps = async (context: any) => {
-//   const appProps = await App.getInitialProps(context)
-//   const providers = await getProviders()
-//   const session = await getSession(context)
-
-//   return {
-//     ...appProps,
-//     session,
-//     providers,
-//   }
-// }
 
 export default MyApp
