@@ -5,6 +5,8 @@ import Image from 'next/image'
 const UserBar = () => {
   const { data: session } = useSession()
 
+  console.log(session)
+
   return (
     <div className="flex justify-between h-fit w-full">
       <div className="hidden lg:flex border border-transparent hover:border-gray-400 rounded-full w-10 h-10 items-center justify-center cursor-pointer hover:bg-gray-300 hover:transition hover:duration-[350ms]">
@@ -13,7 +15,7 @@ const UserBar = () => {
 
       <div className="w-10 h-10 border border-transparent cursor-pointer hover:border-gray-400 flex items-center justify-center rounded-full hover:transition hover:duration-[350ms]">
         <Image
-          src={session?.user?.image || ''}
+          src={session?.user?.image || 'https://lh3.googleusercontent.com/a.png'}
           width={32}
           height={32}
           className="h-8 w-8 rounded-full"

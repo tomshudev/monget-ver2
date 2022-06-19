@@ -15,6 +15,7 @@ export const Expense = objectType({
     t.string("userId");
     t.float("expense");
     t.string("category");
+    // @ts-ignore
     t.date("date");
     t.string("storeName");
     t.string("description");

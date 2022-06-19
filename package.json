@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "show-db": "heroku config:get DATABASE_URL -a monget | xargs pgweb --url",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'"
   },
   "prisma": {
@@ -16,7 +17,9 @@
     "@apollo/client": "^3.5.10",
     "@heroicons/react": "^1.0.6",
     "@prisma/client": "3.10.0",
+    "antd": "^4.19.5",
     "apollo-server-micro": "^3.6.7",
+    "formik": "^2.2.9",
     "graphql": "^16.3.0",
     "lodash": "^4.17.21",
     "micro": "^9.3.4",
@@ -27,7 +30,9 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-google-login": "^5.2.2",
+    "react-loader-spinner": "^5.1.5",
     "rxjs": "^7.5.4",
+    "styled-components": "^5.3.5",
     "swr": "^1.2.2",
     "uuid": "^8.3.2"
   },

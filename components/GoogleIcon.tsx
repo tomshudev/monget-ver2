@@ -1,10 +1,5 @@
 export default ({ active = true }) => (
-  <span
-    style={{
-      marginRight: 10,
-      padding: 10,
-    }}
-  >
+  <span>
     <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
       <g fill="#000" fillRule="evenodd">
         <path

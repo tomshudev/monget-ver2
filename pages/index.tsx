@@ -3,6 +3,8 @@ import { Expense, User } from '@prisma/client'
 import { gql } from 'apollo-server-micro'
 import type { NextPage } from 'next'
 import { getProviders, getSession, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Dashboard from '../components/Dashboard/Dashboard'
 import LeftSidebar from '../components/LeftSidebar/LeftSidebar'
 import Login from '../components/Login'
@@ -41,7 +43,7 @@ const ExpensesByUser = gql`
   }
 `
 
-const Home: NextPage<any> = () => {
+const Home = () => {
   // const {data: session} = useSession()
   // const { data, error, loading, fetchMore } = useQuery(ExpensesByUser, {
   //   variables: {
@@ -62,7 +64,15 @@ const Home: NextPage<any> = () => {
   // console.log(data, data && data.expenses.edges.length === 0)
   // const { endCursor, hasNextPage } = data.expenses.pageInfo
 
-  return (
+    const router = useRouter()
+
+    useEffect(() => {
+      router.push('/dashboard')
+    }, [])
+
+    return <></>
+
+  // return (
     // <>
     //   {data?.expenses.edges.map(({ node }: { node: Expense }) => (
     //     <div key={node.id}>
@@ -89,12 +99,13 @@ const Home: NextPage<any> = () => {
     //     </button>
     //   )}
     // </>
-    <div className='flex justify-between h-full'>
-      <LeftSidebar />
-      <Dashboard />
-      <RightSidebar />
-    </div>
-  )
+    // <div className='flex justify-between h-full'>
+    //   <LeftSidebar />
+    //   <Dashboard />
+    //   <RightSidebar />
+    // </div>
+  //   <></>
+  // )
 }
 
 export const getServerSideProps = async (context) => {
