@@ -8,7 +8,7 @@ import { MongetSession } from '../api/auth/[...nextauth]'
 import { Bars } from 'react-loader-spinner'
 import { useRouter } from 'next/router'
 import DatePicker from 'react-datepicker'
-import { DatePickerField } from './DatePickerField'
+import DatePickerField from './DatePickerField'
 
 const CreateExpense = gql`
   mutation (

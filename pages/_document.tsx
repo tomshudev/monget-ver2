@@ -21,7 +21,7 @@ class MongetDocument extends Document {
       <Html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;700&family=Roboto"
+            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;400;700&family=Roboto&display=optional"
             rel="stylesheet"
           />
         </Head>

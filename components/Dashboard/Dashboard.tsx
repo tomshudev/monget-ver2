@@ -166,7 +166,7 @@ const Dashboard = () => {
   }, [data?.expensesInMonth.expenses])
 
   if (!data) {
-    return <>'Loading'</>
+    return <>Loading</>
   }
 
   console.log(spendAcrossMonth)

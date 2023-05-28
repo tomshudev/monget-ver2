@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-export const DatePickerField: FC<any> = ({ ...props }) => {
+const DatePickerField: FC<any> = ({ ...props }) => {
   const { setFieldValue } = useFormikContext()
   const [field] = useField(props)
   return (
@@ -18,3 +18,5 @@ export const DatePickerField: FC<any> = ({ ...props }) => {
     />
   )
 }
+
+export default DatePickerField

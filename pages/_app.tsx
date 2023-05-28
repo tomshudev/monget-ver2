@@ -6,13 +6,9 @@ import { useCallback, useEffect, useState } from 'react'
 import LeftSidebar from '../components/LeftSidebar/LeftSidebar'
 import RightSidebar from '../components/RightSidebar/RightSidebar'
 import apolloClient from '../lib/apollo'
-import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
-import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 
-import '../styles/globals.css'
 import OneSignal from 'react-onesignal'
-import { io } from 'socket.io-client'
+import '../styles/globals.css'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAI-o8RGRE9H2-U_zhRksZZP-x7oKyb5vQ',
@@ -136,7 +132,7 @@ const RouteGuard = ({ children }) => {
   const session = useSession()
   const [authorized, setAuthorized] = useState(false)
 
-  const validateAuthentication = () => {
+  const validateAuthentication = useCallback(() => {
     if (router.pathname !== '/login') {
       if (!session || session.status === 'unauthenticated') {
         setAuthorized(false)
@@ -147,7 +143,7 @@ const RouteGuard = ({ children }) => {
     } else {
       setAuthorized(true)
     }
-  }
+  }, [router.pathname, session])
 
   useEffect(() => {
     validateAuthentication()
