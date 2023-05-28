@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import prisma from '../lib/what'
+// import { PrismaClient } from '@prisma/client'
+// import prisma from '../lib/what'
 
 // export type Context = {
 //   prisma: PrismaClient
@@ -10,3 +10,5 @@ import prisma from '../lib/what'
 //     prisma,
 //   }
 // }
+
+export {}

@@ -1,16 +1,7 @@
-import { useQuery } from '@apollo/client'
-import { Habit, User } from '@prisma/client'
 import { gql } from 'apollo-server-micro'
-import type { NextPage } from 'next'
-import { getProviders, getSession, useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Dashboard from '../components/Dashboard/Dashboard'
-import LeftSidebar from '../components/LeftSidebar/LeftSidebar'
-import Login from '../components/Login'
-import RightSidebar from '../components/RightSidebar/RightSidebar'
-import { MongetSession } from './api/auth/[...nextauth]'
-import * as OneSignal from '@onesignal/node-onesignal'
 
 const AllUsersQuery = gql`
   query {
