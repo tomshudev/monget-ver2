@@ -1,6 +1,6 @@
 async function regSw() {
   if ('serviceWorker' in navigator) {
-    let url = 'https://tom-axiom.local:3002/sw.js'
+    let url = '/sw.js'
     const reg = await navigator.serviceWorker.register(url, { scope: '/' })
     console.log('service config is', { reg })
     return reg
