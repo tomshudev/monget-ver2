@@ -18,3 +18,5 @@
 
 // // expensesInMonth(endDate: Date!, startDate: Date!, userId: String!): ExpensesResponse
 // // expensesInMonth(endDate: Int!, startDate: Int!, userId: String!): NEXUS__UNKNOWN__TYPE
+
+export {}
