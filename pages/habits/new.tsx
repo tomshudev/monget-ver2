@@ -1,13 +1,11 @@
-import { gql, useMutation, useQuery } from '@apollo/client'
-import { Category } from '@prisma/client'
-import { Button } from 'antd'
+import { gql, useMutation } from '@apollo/client'
+// import { Category } from '@prisma/client'
 import { Field, Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { Bars } from 'react-loader-spinner'
 import Input from '../../components/Input/Input'
 import { MongetSession } from '../api/auth/[...nextauth]'
-import { Bars } from 'react-loader-spinner'
-import { useRouter } from 'next/router'
-import DatePicker from 'react-datepicker'
 import DatePickerField from './DatePickerField'
 
 const CreateExpense = gql`
@@ -32,10 +30,10 @@ const CreateExpense = gql`
   }
 `
 
-const Categories = Object.values(Category).map((v) => ({
-  value: v,
-  label: v,
-}))
+// const Categories = Object.values(Category).map((v) => ({
+//   value: v,
+//   label: v,
+// }))
 
 const NewExpense = () => {
   const [mutate, { loading, reset, data }] = useMutation(CreateExpense)
@@ -78,13 +76,13 @@ const NewExpense = () => {
               placeholder="The amount of the expense"
               outlineColor="#38A3A5"
             />
-            <Field as="select" name="category" className="rounded-[0.5rem] p-2">
+            {/* <Field as="select" name="category" className="rounded-[0.5rem] p-2">
               {Categories.map((option) => (
                 <option value={option.value} key={option.value}>
                   {option.label}
                 </option>
               ))}
-            </Field>
+            </Field> */}
             <Field
               as={Input}
               type="textfield"
