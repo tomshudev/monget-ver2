@@ -6,6 +6,9 @@ import { useSession } from 'next-auth/react'
 import Input from '../../components/Input/Input'
 import { MongetSession } from '../api/auth/[...nextauth]'
 import { Bars } from 'react-loader-spinner'
+import { useRouter } from 'next/router'
+import DatePicker from 'react-datepicker'
+import { DatePickerField } from './DatePickerField'
 
 const CreateExpense = gql`
   mutation (
@@ -35,8 +38,9 @@ const Categories = Object.values(Category).map((v) => ({
 }))
 
 const NewExpense = () => {
-  const [mutate, { data, loading }] = useMutation(CreateExpense)
+  const [mutate, { loading, reset, data }] = useMutation(CreateExpense)
   const { data: session } = useSession()
+  const router = useRouter()
 
   return (
     <div className="flex flex-col py-6 gap-y-4 text-[#424242]">
@@ -45,18 +49,24 @@ const NewExpense = () => {
         initialValues={{
           expense: 0,
           storeName: '',
-          category: '',
+          category: 'RENT',
           description: '',
           date: new Date(),
         }}
         onSubmit={(values) => {
-          console.log(values)
-          // mutate({
-          //   variables: {
-          //     userId: (session as MongetSession)?.user.uid,
-          //     ...values,
-          //   },
-          // })
+          mutate({
+            variables: {
+              userId: (session as MongetSession)?.user.uid,
+              ...values,
+            },
+          }).then((result) => {
+            if (!result.errors) {
+              reset()
+              setTimeout(() => {
+                router.push('/dashboard')
+              }, 3000)
+            }
+          })
         }}
       >
         <Form>
@@ -88,6 +98,7 @@ const NewExpense = () => {
               placeholder="Short description for this expense"
               className="rounded-[0.5rem] p-2"
             />
+            <DatePickerField name="date" />
 
             <div className="flex items-center px-4">
               <button
@@ -105,6 +116,7 @@ const NewExpense = () => {
                   ariaLabel="loading-indicator"
                 />
               )}
+              {!loading && data && <>Saved successfully!</>}
             </div>
           </div>
         </Form>

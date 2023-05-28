@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Expense, User } from '@prisma/client'
+import { Habit, User } from '@prisma/client'
 import { gql } from 'apollo-server-micro'
 import type { NextPage } from 'next'
 import { getProviders, getSession, useSession } from 'next-auth/react'
@@ -10,6 +10,7 @@ import LeftSidebar from '../components/LeftSidebar/LeftSidebar'
 import Login from '../components/Login'
 import RightSidebar from '../components/RightSidebar/RightSidebar'
 import { MongetSession } from './api/auth/[...nextauth]'
+import * as OneSignal from '@onesignal/node-onesignal'
 
 const AllUsersQuery = gql`
   query {
@@ -19,26 +20,6 @@ const AllUsersQuery = gql`
       email
       image
       role
-    }
-  }
-`
-
-const ExpensesByUser = gql`
-  query ($first: Int, $after: String, $userId: String!) {
-    expenses(first: $first, after: $after, userId: $userId) {
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      edges {
-        node {
-          id
-          expense
-          storeName
-          description
-          date
-        }
-      }
     }
   }
 `
@@ -64,46 +45,46 @@ const Home = () => {
   // console.log(data, data && data.expenses.edges.length === 0)
   // const { endCursor, hasNextPage } = data.expenses.pageInfo
 
-    const router = useRouter()
+  const router = useRouter()
 
-    useEffect(() => {
-      router.push('/dashboard')
-    }, [])
+  useEffect(() => {
+    router.push('/habits')
+  }, [])
 
-    return <></>
+  return <></>
 
   // return (
-    // <>
-    //   {data?.expenses.edges.map(({ node }: { node: Expense }) => (
-    //     <div key={node.id}>
-    //       Hello, {node.id}, {node.expense}, {new Date(node.date).toUTCString()}
-    //     </div>
-    //   ))}
-    //   {hasNextPage && (
-    //     <button
-    //       onClick={() => {
-    //         fetchMore({
-    //           variables: { after: endCursor },
-    //           updateQuery: (prevResult: any, { fetchMoreResult }) => {
-    //             fetchMoreResult.expenses.edges = [
-    //               ...prevResult.expenses.edges,
-    //               ...fetchMoreResult.expenses.edges,
-    //             ]
+  // <>
+  //   {data?.expenses.edges.map(({ node }: { node: Expense }) => (
+  //     <div key={node.id}>
+  //       Hello, {node.id}, {node.expense}, {new Date(node.date).toUTCString()}
+  //     </div>
+  //   ))}
+  //   {hasNextPage && (
+  //     <button
+  //       onClick={() => {
+  //         fetchMore({
+  //           variables: { after: endCursor },
+  //           updateQuery: (prevResult: any, { fetchMoreResult }) => {
+  //             fetchMoreResult.expenses.edges = [
+  //               ...prevResult.expenses.edges,
+  //               ...fetchMoreResult.expenses.edges,
+  //             ]
 
-    //             return fetchMoreResult
-    //           },
-    //         })
-    //       }}
-    //     >
-    //       Fetch more!
-    //     </button>
-    //   )}
-    // </>
-    // <div className='flex justify-between h-full'>
-    //   <LeftSidebar />
-    //   <Dashboard />
-    //   <RightSidebar />
-    // </div>
+  //             return fetchMoreResult
+  //           },
+  //         })
+  //       }}
+  //     >
+  //       Fetch more!
+  //     </button>
+  //   )}
+  // </>
+  // <div className='flex justify-between h-full'>
+  //   <LeftSidebar />
+  //   <Dashboard />
+  //   <RightSidebar />
+  // </div>
   //   <></>
   // )
 }
@@ -111,7 +92,7 @@ const Home = () => {
 export const getServerSideProps = async (context) => {
   const session = await getSession(context)
   if (!session) {
-    context.res.writeHead(302, {Location: '/login'})
+    context.res.writeHead(302, { Location: '/login' })
     context.res.end()
     return {}
   }

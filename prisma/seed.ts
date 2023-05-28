@@ -1,32 +1,34 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function main() {
   const client = await prisma.user.create({
     data: {
-      email: "tomshudev@gmail.com",
-      name: 'tom'
+      email: 'tomshudev@gmail.com',
+      name: 'tom',
     },
-  });
+  })
 
-  await prisma.expense.create({
+  await prisma.habit.create({
     data: {
       userId: client.id,
-      category: "RENT",
-      expense: 2600,
-      storeName: "יוסף",
-      date: new Date(),
-      description: "שכר דירה לחודש פברואר",
+      category: 'SPORT',
+      definition: {
+        days: ['sunday', 'tuesday'],
+        hours: [9],
+      },
+      startDate: new Date().getTime(),
+      description: 'Running',
     },
-  });
+  })
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

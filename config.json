@@ -1,0 +1,9 @@
+{
+  "localhost-proxy": {
+    "source": 3002,
+    "target": 3000,
+    "hostname": "tom-axiom.local",
+    "key": "tom-axiom.local-key.pem",
+    "cert": "tom-axiom.local.pem"
+  }
+}

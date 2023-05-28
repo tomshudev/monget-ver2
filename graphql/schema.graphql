@@ -2,26 +2,31 @@
 ### Do not make changes to this file directly
 
 
-"""Date custom scalar type"""
 scalar Date
 
 type Edge {
   cursor: String
-  node: Expense
+  node: Habit
 }
 
-type Expense {
+type Habit {
   category: String
-  date: Date
+  definition: JSON
   description: String
-  expense: Float
   id: String
-  storeName: String
+  name: String
+  startDate: Date
   userId: String
 }
 
+type HabitsResponse {
+  habits: [Habit]
+}
+
+scalar JSON
+
 type Mutation {
-  createExpense(category: String!, date: Date!, description: String, expense: Float!, storeName: String!, userId: String!): Expense!
+  createExpense(category: String!, date: Int!, description: String, expense: Float!, storeName: String!, userId: String!): Habit!
 }
 
 type PageInfo {
@@ -30,7 +35,7 @@ type PageInfo {
 }
 
 type Query {
-  expenses(after: String, first: Int, userId: String!): Response
+  habits(after: String, first: Int, userId: String!): Response
   user(userId: String!): User
   users: [User]!
 }
@@ -47,7 +52,7 @@ enum Role {
 
 type User {
   email: String
-  expenses: [Expense]
+  habits: [Habit]
   id: String
   image: String
   name: String

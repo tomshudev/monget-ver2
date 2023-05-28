@@ -13,8 +13,8 @@ export const routes = [
   },
   {
     icon: <SwitchHorizontalIcon width={25} height={25} />,
-    text: 'Transactions',
-    path: '/dashboard',
+    text: 'Habits',
+    path: '/habits',
   },
   {
     icon: <CalendarIcon width={25} height={25} />,

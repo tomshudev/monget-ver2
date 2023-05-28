@@ -15,32 +15,30 @@ enum Role {
   USER
 }
 
-model Expense {
+model Habit {
   id          String   @id @default(uuid())
   userId      String
-  expense     Float    @default(0)
-  category    Category
-  date        DateTime
-  storeName   String
   description String?
+  definition  Json?
+  category    Category
+  startDate   Int?
   user        User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  email     String    @unique
-  role      Role      @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  role      Role     @default(USER)
   image     String?
-  expenses  Expense[]
+  habits    Habit[]
 }
 
 enum Category {
-  RENT
-  GROCERIES
-  SHOPPING
-  ENTERTAIMENT
-  MEDICINE
+  SPORT
+  HEALTH
+  WORK
+  RELATIONSHIP
 }
