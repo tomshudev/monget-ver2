@@ -10,30 +10,26 @@ async function regSw() {
 
 async function subscribe(
   serviceWorkerReg: ServiceWorkerRegistration,
-  saveSubscription,
-  setTest
+  saveSubscription
 ) {
-  navigator.serviceWorker.ready.then(async () => {
-    // setTest(JSON.stringify(serviceWorkerReg.pushManager.getSubscription()))
-    // let subscription = await serviceWorkerReg.pushManager.getSubscription()
+  let subscription = await serviceWorkerReg.pushManager.getSubscription()
 
-    // if (subscription) {
-    //   console.log('removing', { subscription })
-    //   subscription.unsubscribe()
-    // } else {
-    //   if (subscription === null) {
-    const subscription = await serviceWorkerReg.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey:
-        'BPPq3K-M3rT-X7zSwAMC7AROqXgGb-UKWEX-zjlrGpQQzNi9rwNQnxk1CLaQEFg5sflzNL7_X6arTty4qX2XMHg',
-    })
+  if (subscription) {
+    console.log('removing', { subscription })
+    subscription.unsubscribe()
+  } else {
+    if (subscription === null) {
+      subscription = await serviceWorkerReg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey:
+          'BPPq3K-M3rT-X7zSwAMC7AROqXgGb-UKWEX-zjlrGpQQzNi9rwNQnxk1CLaQEFg5sflzNL7_X6arTty4qX2XMHg',
+      })
 
-    console.log('after', { subscription })
+      console.log('after', { subscription })
 
-    saveSubscription(subscription)
-    //   }
-    // }
-  })
+      saveSubscription(subscription)
+    }
+  }
 }
 
 export { regSw, subscribe }

@@ -24,23 +24,19 @@ const Login: FC<any> = ({ provider }) => {
   async function registerAndSubscribe() {
     try {
       const serviceWorkerReg = await regSw()
-      await subscribe(
-        serviceWorkerReg,
-        (subscription: PushSubscription) => {
-          mutate({
-            variables: {
-              ...JSON.parse(JSON.stringify(subscription)),
-            },
-          }).then((result) => {
-            if (!result.errors) {
-              console.log('Success!')
-            } else {
-              console.error('erorrororsss', result.errors)
-            }
-          })
-        },
-        setTest
-      )
+      await subscribe(serviceWorkerReg, (subscription: PushSubscription) => {
+        mutate({
+          variables: {
+            ...JSON.parse(JSON.stringify(subscription)),
+          },
+        }).then((result) => {
+          if (!result.errors) {
+            console.log('Success!')
+          } else {
+            console.error('erorrororsss', result.errors)
+          }
+        })
+      })
     } catch (error: any) {
       console.log(error)
       setFirst(error.toString())
