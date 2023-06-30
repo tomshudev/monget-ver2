@@ -17,35 +17,35 @@ const CreateSubscription = gql`
 `
 
 const Login: FC<any> = ({ provider }) => {
-  const [mutate, { loading, reset, data }] = useMutation(CreateSubscription)
+  // const [mutate, { loading, reset, data }] = useMutation(CreateSubscription)
   const [first, setFirst] = useState('no')
   const [test, setTest] = useState('')
 
-  async function registerAndSubscribe() {
-    try {
-      const serviceWorkerReg = await regSw()
-      await subscribe(serviceWorkerReg, (subscription: PushSubscription) => {
-        mutate({
-          variables: {
-            ...JSON.parse(JSON.stringify(subscription)),
-          },
-        }).then((result) => {
-          if (!result.errors) {
-            console.log('Success!')
-          } else {
-            console.error('erorrororsss', result.errors)
-          }
-        })
-      })
-    } catch (error: any) {
-      console.log(error)
-      setFirst(error.toString())
-    }
-  }
+  // async function registerAndSubscribe() {
+  //   try {
+  //     const serviceWorkerReg = await regSw()
+  //     await subscribe(serviceWorkerReg, (subscription: PushSubscription) => {
+  //       mutate({
+  //         variables: {
+  //           ...JSON.parse(JSON.stringify(subscription)),
+  //         },
+  //       }).then((result) => {
+  //         if (!result.errors) {
+  //           console.log('Success!')
+  //         } else {
+  //           console.error('erorrororsss', result.errors)
+  //         }
+  //       })
+  //     })
+  //   } catch (error: any) {
+  //     console.log(error)
+  //     setFirst(error.toString())
+  //   }
+  // }
 
-  useEffect(() => {
-    registerAndSubscribe()
-  }, [])
+  // useEffect(() => {
+  //   registerAndSubscribe()
+  // }, [])
 
   return (
     <div className="w-full flex flex-col items-center font-josefin min-h-full justify-center text-[#424242]">

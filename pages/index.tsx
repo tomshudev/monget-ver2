@@ -82,7 +82,11 @@ const Home = () => {
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context)
+
+  console.log('from index', { session })
+
   if (!session) {
+    console.log('forwarding to login')
     context.res.writeHead(302, { Location: '/login' })
     context.res.end()
     return {}

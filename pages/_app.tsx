@@ -114,6 +114,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     // }
   })
 
+  console.log('from app', { session })
+
   return (
     <ApolloProvider client={apolloClient}>
       <SessionProvider session={session}>

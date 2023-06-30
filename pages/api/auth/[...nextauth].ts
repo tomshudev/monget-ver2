@@ -31,14 +31,23 @@ export default nextAuth({
 
       if (!session || !session.user) return session
 
-      const result = await apolloClient.mutate({
-        mutation: CreateUser,
-        variables: {
-          email: session.user.email,
-          name: session.user.name,
-          image: session.user.image,
-        },
-      })
+      console.log('going to create a user')
+
+      const result = await apolloClient
+        .mutate({
+          mutation: CreateUser,
+          variables: {
+            email: session.user.email,
+            name: session.user.name,
+            image: session.user.image,
+          },
+        })
+        .catch((e) => {
+          console.error('failed to create or find a user', e)
+          return undefined
+        })
+
+      console.log('found user', { result })
 
       // let user = await prisma.user.findUnique({
       //   where: {
@@ -58,7 +67,8 @@ export default nextAuth({
       // }
 
       // ;(session as MongetSession).user.uid = user.id
-      ;(session as MongetSession).user.uid = result.data.createUser.id
+      ;(session as MongetSession).user.uid =
+        result?.data.createUser.id || undefined
       return session
     },
   },
