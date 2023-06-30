@@ -117,6 +117,7 @@ const Habits = () => {
 
   return (
     <div className="flex flex-wrap gap-3 justify-center p-2 text-gray-800">
+      {first}
       {
         data.habits.edges.map(({ node }) => (
           <div key={node.id}>
