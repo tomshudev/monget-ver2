@@ -1,8 +1,9 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import { useSession } from 'next-auth/react'
 import Expense from '../../components/Expense'
 import { MongetSession } from '../api/auth/[...nextauth]'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { regSw, subscribe } from '../../lib/helper'
 
 const HabitsByUser = gql`
   query ($first: Int, $after: String, $userId: String!) {
@@ -20,6 +21,18 @@ const HabitsByUser = gql`
           startDate
         }
       }
+    }
+  }
+`
+
+const CreateSubscription = gql`
+  mutation ($endpoint: String!, $expirationTime: Int, $keys: JSON) {
+    createSubscription(
+      endpoint: $endpoint
+      expirationTime: $expirationTime
+      keys: $keys
+    ) {
+      endpoint
     }
   }
 `
@@ -57,6 +70,37 @@ const Habits = () => {
   //     window.OneSignal = undefined
   //   }
   // }, [])
+
+  const [mutate, { loading: subLoading, reset, data: subData }] =
+    useMutation(CreateSubscription)
+  const [first, setFirst] = useState('no')
+  const [test, setTest] = useState('')
+
+  async function registerAndSubscribe() {
+    try {
+      const serviceWorkerReg = await regSw()
+      await subscribe(serviceWorkerReg, (subscription: PushSubscription) => {
+        mutate({
+          variables: {
+            ...JSON.parse(JSON.stringify(subscription)),
+          },
+        }).then((result) => {
+          if (!result.errors) {
+            console.log('Success!')
+          } else {
+            console.error('erorrororsss', result.errors)
+          }
+        })
+      })
+    } catch (error: any) {
+      console.log(error)
+      setFirst(error.toString())
+    }
+  }
+
+  useEffect(() => {
+    registerAndSubscribe()
+  }, [])
 
   if (loading) {
     return <div>Loading...</div>

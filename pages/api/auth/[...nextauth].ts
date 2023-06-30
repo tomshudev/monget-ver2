@@ -1,12 +1,22 @@
 import nextAuth, { DefaultSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import prisma from '../../../lib/what'
+import { gql } from '@apollo/client'
+import apolloClient from '../../../lib/apollo'
 
 export type MongetSession = {
   user: {
     uid: string | undefined
   }
 } & DefaultSession
+
+const CreateUser = gql`
+  mutation ($email: String!, $name: String!, $image: String) {
+    createUser(email: $email, name: $name, image: $image) {
+      id
+    }
+  }
+`
 
 export default nextAuth({
   providers: [
@@ -21,24 +31,34 @@ export default nextAuth({
 
       if (!session || !session.user) return session
 
-      let user = await prisma.user.findUnique({
-        where: {
-          email: session.user.email!,
+      const result = await apolloClient.mutate({
+        mutation: CreateUser,
+        variables: {
+          email: session.user.email,
+          name: session.user.name,
+          image: session.user.image,
         },
       })
 
-      if (!user) {
-        user = await prisma.user.create({
-          data: {
-            email: session.user.email!,
-            name: session.user.name!,
-            image: session.user.image,
-            role: 'USER',
-          },
-        })
-      }
+      // let user = await prisma.user.findUnique({
+      //   where: {
+      //     email: session.user.email!,
+      //   },
+      // })
 
-      ;(session as MongetSession).user.uid = user.id
+      // if (!user) {
+      //   user = await prisma.user.create({
+      //     data: {
+      //       email: session.user.email!,
+      //       name: session.user.name!,
+      //       image: session.user.image,
+      //       role: 'USER',
+      //     },
+      //   })
+      // }
+
+      // ;(session as MongetSession).user.uid = user.id
+      ;(session as MongetSession).user.uid = result.data.createUser.id
       return session
     },
   },
